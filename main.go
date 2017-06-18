@@ -2,9 +2,18 @@ package main
 
 import (
   "fmt"
-  "os"
+  // "os"
+  "os/exec"
   "github.com/pleycpl/genpm/tool"
 )
+
+var toolsList = []string{
+  "pacman",
+  "apt",
+  "dnf",
+  "zypper",
+  "emerge",
+}
 
 // https://stackoverflow.com/questions/35343707/linux-apt-get-command-not-found-how-to-install-a-package-in-arch-linux , Thnaks for https://stackoverflow.com/users/523100/czechnology
 var tools = map[string]tool.Tool{
@@ -40,25 +49,38 @@ var tools = map[string]tool.Tool{
   },
 }
 
+func checkAvailableTools() []string {
+  var availableTools []string
+  for _, tool := range toolsList {
+    if checkTool(tool) {
+      availableTools = append(availableTools, tool)
+    }
+  }
+  return availableTools
+}
+
 // Checking tool with which command
-/*
 func checkTool(tool string) bool {
   cmdOut, err := exec.Command("which", tool).Output()
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		// fmt.Fprintln(os.Stderr, err)
 		return false
 	} else {
 		fmt.Println(string(cmdOut))
 		return true
 	}
 }
-*/
+
 func main()  {
   fmt.Println(tools["pacman"])
   fmt.Println(tools["pacman"].InstallCommand)
   fmt.Println(tools["pacman"].RemoveCommand)
   fmt.Println(tools["pacman"].SearchCommand)
   fmt.Println(tools["pacman"].UpgradeCommand)
+
+  available := checkAvailableTools()
+  fmt.Println(available)
+  /*
   args := os.Args[1:]
 
   switch args[0] {
@@ -77,4 +99,5 @@ func main()  {
   default:
     fmt.Println("Not founded!")
   }
+  */
 }
