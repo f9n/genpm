@@ -42,6 +42,7 @@ func (this *Tool) Remove(packagename string) {
   this.runScript(script)
 }
 
+// search package with Tool
 func (this *Tool) Search(searchstring string) {
   fmt.Println("[+] Runned Tool search method")
   fmt.Println(searchstring)
@@ -50,6 +51,7 @@ func (this *Tool) Search(searchstring string) {
   this.runScript(script)
 }
 
+// upgrade packages with Tool
 func (this *Tool) Upgrade() {
   fmt.Println("[+] Runned Tool upgrade method")
   this.runScript(this.UpgradeCommand)
