@@ -5,6 +5,15 @@ import (
   "os"
 )
 
+var toolsList = []string{
+  "pacman",
+  "apt",
+  "dnf",
+  "zypper",
+  "emerge",
+}
+
+// checking available tools
 func checkAvailableTools() []string {
   var availableTools []string
   for _, tool := range toolsList {
