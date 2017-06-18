@@ -3,6 +3,7 @@ package main
 import (
   "fmt"
   "os"
+  "os/exec"
   "strings"
 )
 
@@ -28,6 +29,13 @@ func install(packagename string)  {
   }
   script := strings.Join(commands, " ")
   fmt.Println(script)
+  if checkTool("pacman") {
+    cmd := exec.Command("/bin/bash", "-c", script)
+    cmd.Stdout = os.Stdout
+    cmd.Stdin = os.Stdin
+		cmd.Stderr = os.Stderr
+		_ = cmd.Run()
+  }
 }
 
 func main()  {
