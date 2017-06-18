@@ -3,10 +3,19 @@ package main
 import (
   "fmt"
   "os"
+  "strings"
 )
 
 func install(packagename string)  {
   fmt.Println(packagename)
+  commands := []string{
+    "sudo",
+    "pacman",
+    "-S",
+    packagename,
+  }
+  script := strings.Join(commands, " ")
+  fmt.Println(script)
 }
 
 func main()  {
