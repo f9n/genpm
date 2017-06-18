@@ -17,12 +17,12 @@ var tools = map[string]Tool{
   "pacman": {
     "pacman -S",        // install
     "pacman -R",        // remove
-    "pacman -Ss"        // search
+    "pacman -Ss",       // search
   },
   "apt-get": {
     "apt-get install",  // install
     "apt-get remove",   // remove
-    "apt-cache search"  // search
+    "apt-cache search", // search
   },
 }
 
