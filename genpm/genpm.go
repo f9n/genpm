@@ -5,6 +5,7 @@ import (
   "os"
   "os/exec"
   "io/ioutil"
+  "github.com/pleycpl/genpm/tool"
 )
 
 var allpackagemanagers = []string{
@@ -18,32 +19,33 @@ var allpackagemanagers = []string{
 // Creating .genpmrc file with Genpm struct
 type Genpm struct {
   Path string
-  Tool string
+  Tool tool.Tool
 }
 
 // reload .genpmrc file
-func (this *Genpm) reload() {
+func (this *Genpm) reload() string {
   fmt.Println("[+] Runned reload method in Genpm Struct")
   file, err := os.Create(this.Path)
   if err != nil {
     fmt.Println("The file doesn't created, ", err)
-    return
+    return ""
   }
   defer file.Close()
 
   availables := getExistsPmTools()
   file.WriteString(availables[0])
-  this.Tool = availables[0]
+  toolname := availables[0]
+  return toolname
 }
 
 // checking .genpmrc file
 func (this *Genpm) Check() {
   fmt.Println("[+] Runned Check method in Genpm Struct")
   b, err := ioutil.ReadFile(this.Path)
-  this.Tool = string(b)
+  toolname := string(b)
   if err != nil {
     fmt.Println("The File is not exists!", err)
-    this.reload()
+    toolname = this.reload()
   }
 }
 
