@@ -13,12 +13,7 @@ type Tool struct {
   searchCommand  string
 }
 
-// install package with Tool
-func (this *Tool) install(packagename string) {
-  fmt.Println("[+] Runned Tool install method")
-  fmt.Println(packagename)
-  script := this.installCommand + " " + packagename
-  fmt.Println(script)
+func (this *Tool) runScript(script string) {
   cmd := exec.Command("/bin/bash", "-c", script)
   cmd.Stdout = os.Stdout
   cmd.Stdin = os.Stdin
@@ -26,16 +21,21 @@ func (this *Tool) install(packagename string) {
   _ = cmd.Run()
 }
 
+// install package with Tool
+func (this *Tool) install(packagename string) {
+  fmt.Println("[+] Runned Tool install method")
+  fmt.Println(packagename)
+  script := this.installCommand + " " + packagename
+  fmt.Println(script)
+  this.runScript(script)
+}
+
 // remove package with Tool
 func (this *Tool) remove(packagename string) {
   fmt.Println(packagename)
   script := this.removeCommand + " " + packagename
   fmt.Println(script)
-  cmd := exec.Command("/bin/bash", "-c", script)
-  cmd.Stdout = os.Stdout
-  cmd.Stdin = os.Stdin
-	cmd.Stderr = os.Stderr
-	_ = cmd.Run()
+  this.runScript(script)
 }
 
 var tools = map[string]Tool{
