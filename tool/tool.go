@@ -8,10 +8,11 @@ import (
 
 // contain tool's install, remove, search commands
 type Tool struct {
-  InstallCommand string
-  RemoveCommand  string
-  SearchCommand  string
-  UpgradeCommand string
+  ToolName       string `json:"name"`
+  InstallCommand string `json:"install"`
+  RemoveCommand  string `json:"remove"`
+  SearchCommand  string `json:"search"`
+  UpgradeCommand string `json:"upgrade"`
 }
 
 // run script in bash
