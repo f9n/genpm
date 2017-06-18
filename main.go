@@ -8,15 +8,15 @@ import (
 )
 
 type Tool struct {
-  install string
-  remove  string
-  search  string
+  installCommand string
+  removeCommand  string
+  searchCommand  string
 }
 
-func (this *Tool) installer(packagename string) {
+func (this *Tool) install(packagename string) {
   fmt.Println("[+] Runned Tool install method")
   fmt.Println(packagename)
-  script := this.install + " " + packagename
+  script := this.installCommand + " " + packagename
   fmt.Println(script)
   cmd := exec.Command("/bin/bash", "-c", script)
   cmd.Stdout = os.Stdout
@@ -113,13 +113,13 @@ func install(packagename string)  {
 func main()  {
   fmt.Println(tools)
   fmt.Println(tools["pacman"])
-  fmt.Println(tools["pacman"].install)
+  fmt.Println(tools["pacman"].installCommand)
   args := os.Args[1:]
 
   switch args[0] {
   case "install":
     tool := tools["pacman"]
-    tool.installer(args[1])
+    tool.install(args[1])
     // install(args[1])
   case "remove":
     remove(args[1])
