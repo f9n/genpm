@@ -47,6 +47,13 @@ func (this *Genpm) Check() {
     fmt.Println("The File is not exists!", err)
     toolname = this.reload()
   }
+  this.Tool = tool.Tool{
+    ToolName: toolname,
+    InstallCommand: "echo installcommand",
+    RemoveCommand: "echo RemoveCommand",
+    SearchCommand: "echo stringcommand",
+    UpgradeCommand: "echo UpgradeCommand",
+  }
 }
 
 // checking available tools
