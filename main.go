@@ -8,7 +8,15 @@ import (
 )
 
 // https://stackoverflow.com/questions/35343707/linux-apt-get-command-not-found-how-to-install-a-package-in-arch-linux , Thnaks for https://stackoverflow.com/users/523100/czechnology
-var tools = map[string]tool.Tool{
+var tools = []tool.Tool{
+  {
+    "pacman",
+    "sudo pacman -S",         // install
+    "sudo pacman -Rs",        // remove
+    "sudo pacman -Ss",        // search
+    "sudo pacman -Syu",      // upgrade
+  },
+  /*
   "pacman": {               // Arch
     "sudo pacman -S",         // install
     "sudo pacman -Rs",        // remove
@@ -38,17 +46,17 @@ var tools = map[string]tool.Tool{
     "emerge -C",
     "emerge -S",
     "emerge -u world",
-  },
+  },*/
 }
 
 func main()  {
   fmt.Println("[+] Runned Main function")
-  GenpmInstance := genpm.Genpm{"/home/chuck/.genpmrc", ""}
+  GenpmInstance := genpm.NewGenpm("/home/chuck/.genpmrc")
   GenpmInstance.Check()
 
   args := os.Args[1:]
   if len(args) > 0 {
-    tool := tools[GenpmInstance.Tool]
+    tool := GenpmInstance.Tool
     switch args[0] {
     case "install":
       tool.Install(args[1])
