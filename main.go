@@ -6,6 +6,18 @@ import (
   "strings"
 )
 
+// Checking tool with which command
+func checkTool(tool string) bool {
+  cmdOut, err := exec.Command("which", tool).Output()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return false
+	} else {
+		fmt.Println(string(cmdOut))
+		return true
+	}
+}
+
 func install(packagename string)  {
   fmt.Println(packagename)
   commands := []string{
