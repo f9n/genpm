@@ -50,6 +50,11 @@ func (this *Tool) search(searchstring string) {
   this.runScript(script)
 }
 
+func (this *Tool) upgrade() {
+  fmt.Println("[+] Runned Tool upgrade method")
+  this.runScript(this.upgradeCommand)
+}
+
 // https://stackoverflow.com/questions/35343707/linux-apt-get-command-not-found-how-to-install-a-package-in-arch-linux , Thnaks for https://stackoverflow.com/users/523100/czechnology
 var tools = map[string]Tool{
   "pacman": {               // Arch
@@ -114,6 +119,9 @@ func main()  {
   case "search":
     tool := tools["pacman"]
     tool.search(args[1])
+  case "upgrade":
+    tool := tools["pacman"]
+    tool.upgrade()
   default:
     fmt.Println("Not founded!")
   }
