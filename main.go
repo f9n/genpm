@@ -42,31 +42,21 @@ var tools = map[string]tool.Tool{
 }
 
 func main()  {
-  MyTool := genpm.Genpm{"/home/chuck/.genpmrc", ""}
-  fmt.Println(MyTool.Path)
-  MyTool.Check()
-  fmt.Println(MyTool.Tool)
-  fmt.Println(tools[MyTool.Tool])
-  fmt.Println(tools["pacman"])
-  fmt.Println(tools["pacman"].InstallCommand)
-  fmt.Println(tools["pacman"].RemoveCommand)
-  fmt.Println(tools["pacman"].SearchCommand)
-  fmt.Println(tools["pacman"].UpgradeCommand)
+  fmt.Println("[+] Runned Main function")
+  GenpmInstance := genpm.Genpm{"/home/chuck/.genpmrc", ""}
+  GenpmInstance.Check()
 
   args := os.Args[1:]
   if len(args) > 0 {
+    tool := tools[GenpmInstance.Tool]
     switch args[0] {
     case "install":
-      tool := tools["pacman"]
       tool.Install(args[1])
     case "remove":
-      tool := tools["pacman"]
       tool.Remove(args[1])
     case "search":
-      tool := tools["pacman"]
       tool.Search(args[1])
     case "upgrade":
-      tool := tools["pacman"]
       tool.Upgrade()
     default:
       fmt.Println("Not founded!")
