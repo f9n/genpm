@@ -7,13 +7,16 @@ import (
   "strings"
 )
 
+// contain tool's install, remove, search commands
 type Tool struct {
   installCommand string
   removeCommand  string
   searchCommand  string
 }
 
+// run script in bash
 func (this *Tool) runScript(script string) {
+  fmt.Println("[+] Runned Tool runScript method")
   cmd := exec.Command("/bin/bash", "-c", script)
   cmd.Stdout = os.Stdout
   cmd.Stdin = os.Stdin
@@ -32,6 +35,7 @@ func (this *Tool) install(packagename string) {
 
 // remove package with Tool
 func (this *Tool) remove(packagename string) {
+  fmt.Println("[+] Runned Tool remove method")
   fmt.Println(packagename)
   script := this.removeCommand + " " + packagename
   fmt.Println(script)
