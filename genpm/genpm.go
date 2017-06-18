@@ -56,6 +56,19 @@ func (this *Genpm) Check() {
   }
 }
 
+func NewGenpm(path string) Genpm {
+  return Genpm{
+    Path: path,
+    Tool: tool.Tool{
+      ToolName: "",
+      InstallCommand: "",
+      RemoveCommand: "",
+      SearchCommand: "",
+      UpgradeCommand: "",
+    },
+  }
+}
+
 // checking available tools
 func getExistsPmTools() []string {
   fmt.Println("[+] Runned getExistsPmTools function")
