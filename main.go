@@ -7,6 +7,13 @@ import (
   "strings"
 )
 
+const tools = []string{
+  "pacman",   // Arch Based
+  "apt-get",  // Debian Based
+  "dnf",      // Fedora Based
+  "yum",      // Rpm Based
+}
+
 // Checking tool with which command
 func checkTool(tool string) bool {
   cmdOut, err := exec.Command("which", tool).Output()
@@ -19,6 +26,7 @@ func checkTool(tool string) bool {
 	}
 }
 
+// Searching string with tool
 func search(searchstring string)  {
   fmt.Println(searchstring)
   commands := []string{
@@ -38,6 +46,7 @@ func search(searchstring string)  {
   }
 }
 
+// Removing package with tool
 func remove(packagename string)  {
   fmt.Println(packagename)
   commands := []string{
@@ -57,6 +66,7 @@ func remove(packagename string)  {
   }
 }
 
+// Installing package with tool
 func install(packagename string)  {
   fmt.Println(packagename)
   commands := []string{
