@@ -1,0 +1,7 @@
+{
+  "name": "zypper",
+  "install": "zypper install",
+  "remove": "zypper remove",
+  "search": "zypper search",
+  "upgrade": "zypper update"
+}

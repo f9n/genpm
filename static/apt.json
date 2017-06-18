@@ -1,0 +1,7 @@
+{
+  "name": "apt",
+  "install": "sudo apt install",
+  "remove": "sudo apt remove",
+  "search": "sudo apt search",
+  "upgrade": "sudo apt update; sudo apt upgrade"
+}

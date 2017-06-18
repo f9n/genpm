@@ -1,0 +1,7 @@
+{
+  "name": "dnf",
+  "install": "sudo dnf install",
+  "remove": "sudo dnf remove",
+  "search": "sudo dnf search",
+  "upgrade": "sudo dnf upgrade"
+}

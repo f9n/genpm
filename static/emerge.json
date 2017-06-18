@@ -1,0 +1,7 @@
+{
+  "name": "emerge",
+  "install": "emerge [-a]",
+  "remove": "emerge -C",
+  "search": "emerge -S",
+  "upgrade": "emerge -u world"
+}

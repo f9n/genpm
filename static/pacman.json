@@ -1,0 +1,7 @@
+{
+  "name": "pacman",
+  "install": "sudo pacman -S",
+  "remove": "sudo pacman -Rs",
+  "search": "sudo pacman -Ss",
+  "upgrade": "sudo pacman -Syu"
+}
