@@ -53,7 +53,7 @@ func (this *Genpm) Check() {
 }
 
 func NewGenpm(path string) Genpm {
-  return Genpm{
+  GenpmInstance := Genpm{
     Path: path,
     Tool: tool.Tool{
       ToolName: "",
@@ -63,6 +63,8 @@ func NewGenpm(path string) Genpm {
       UpgradeCommand: "",
     },
   }
+  GenpmInstance.Check()
+  return GenpmInstance
 }
 
 // checking available tools

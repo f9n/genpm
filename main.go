@@ -10,7 +10,6 @@ import (
 func main()  {
   fmt.Println("[+] Runned Main function")
   GenpmInstance := genpm.NewGenpm("/home/chuck/.genpmrc")
-  GenpmInstance.Check()
 
   args := os.Args[1:]
   if len(args) > 0 {
