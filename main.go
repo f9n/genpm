@@ -13,6 +13,7 @@ type Tool struct {
   searchCommand  string
 }
 
+// install package with Tool
 func (this *Tool) install(packagename string) {
   fmt.Println("[+] Runned Tool install method")
   fmt.Println(packagename)
@@ -23,6 +24,18 @@ func (this *Tool) install(packagename string) {
   cmd.Stdin = os.Stdin
   cmd.Stderr = os.Stderr
   _ = cmd.Run()
+}
+
+// remove package with Tool
+func (this *Tool) remove(packagename string) {
+  fmt.Println(packagename)
+  script := this.removeCommand + " " + packagename
+  fmt.Println(script)
+  cmd := exec.Command("/bin/bash", "-c", script)
+  cmd.Stdout = os.Stdout
+  cmd.Stdin = os.Stdin
+	cmd.Stderr = os.Stderr
+	_ = cmd.Run()
 }
 
 var tools = map[string]Tool{
@@ -122,7 +135,9 @@ func main()  {
     tool.install(args[1])
     // install(args[1])
   case "remove":
-    remove(args[1])
+    tool := tools["pacman"]
+    tool.remove(args[1])
+    // remove(args[1])
   case "search":
     search(args[1])
   default:
