@@ -13,6 +13,37 @@ var toolsList = []string{
   "emerge",
 }
 
+// Creating .genpmrc file with Genpm struct
+type Genpm struct {
+  path string
+  tool string
+}
+
+// reload .genpmrc file
+func (this *Genpm) reload() {
+  file, err := os.Create(this.path)
+  if err != nil {
+    // handle the error here
+    return
+  }
+  defer file.Close()
+
+  available := checkAvailableTools()
+  fmt.Println(available)
+  file.WriteString(available[0])
+}
+
+// checking .genpmrc file
+func (this *Genpm) Check() {
+  // read the whole file at once
+  b, err := ioutil.ReadFile(this.path)
+  this.tool = string(b)
+  if err != nil {
+    fmt.Println("The File is not exists!")
+    this.reload()
+  }
+}
+
 // checking available tools
 func checkAvailableTools() []string {
   var availableTools []string
