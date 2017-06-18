@@ -3,60 +3,11 @@ package main
 import (
   "fmt"
   "os"
-  "os/exec"
+  "github.com/pleycpl/genpm/tool"
 )
 
-// contain tool's install, remove, search commands
-type Tool struct {
-  installCommand string
-  removeCommand  string
-  searchCommand  string
-  upgradeCommand string
-}
-
-// run script in bash
-func (this *Tool) runScript(script string) {
-  fmt.Println("[+] Runned Tool runScript method")
-  cmd := exec.Command("/bin/bash", "-c", script)
-  cmd.Stdout = os.Stdout
-  cmd.Stdin = os.Stdin
-  cmd.Stderr = os.Stderr
-  _ = cmd.Run()
-}
-
-// install package with Tool
-func (this *Tool) install(packagename string) {
-  fmt.Println("[+] Runned Tool install method")
-  fmt.Println(packagename)
-  script := this.installCommand + " " + packagename
-  fmt.Println(script)
-  this.runScript(script)
-}
-
-// remove package with Tool
-func (this *Tool) remove(packagename string) {
-  fmt.Println("[+] Runned Tool remove method")
-  fmt.Println(packagename)
-  script := this.removeCommand + " " + packagename
-  fmt.Println(script)
-  this.runScript(script)
-}
-
-func (this *Tool) search(searchstring string) {
-  fmt.Println("[+] Runned Tool search method")
-  fmt.Println(searchstring)
-  script := this.searchCommand + " " + searchstring
-  fmt.Println(script)
-  this.runScript(script)
-}
-
-func (this *Tool) upgrade() {
-  fmt.Println("[+] Runned Tool upgrade method")
-  this.runScript(this.upgradeCommand)
-}
-
 // https://stackoverflow.com/questions/35343707/linux-apt-get-command-not-found-how-to-install-a-package-in-arch-linux , Thnaks for https://stackoverflow.com/users/523100/czechnology
-var tools = map[string]Tool{
+var tools = map[string]tool.Tool{
   "pacman": {               // Arch
     "sudo pacman -S",         // install
     "sudo pacman -Rs",        // remove
@@ -90,6 +41,7 @@ var tools = map[string]Tool{
 }
 
 // Checking tool with which command
+/*
 func checkTool(tool string) bool {
   cmdOut, err := exec.Command("which", tool).Output()
 	if err != nil {
@@ -100,28 +52,28 @@ func checkTool(tool string) bool {
 		return true
 	}
 }
-
+*/
 func main()  {
   fmt.Println(tools["pacman"])
-  fmt.Println(tools["pacman"].installCommand)
-  fmt.Println(tools["pacman"].removeCommand)
-  fmt.Println(tools["pacman"].searchCommand)
-  fmt.Println(tools["pacman"].upgradeCommand)
+  fmt.Println(tools["pacman"].InstallCommand)
+  fmt.Println(tools["pacman"].RemoveCommand)
+  fmt.Println(tools["pacman"].SearchCommand)
+  fmt.Println(tools["pacman"].UpgradeCommand)
   args := os.Args[1:]
 
   switch args[0] {
   case "install":
     tool := tools["pacman"]
-    tool.install(args[1])
+    tool.Install(args[1])
   case "remove":
     tool := tools["pacman"]
-    tool.remove(args[1])
+    tool.Remove(args[1])
   case "search":
     tool := tools["pacman"]
-    tool.search(args[1])
+    tool.Search(args[1])
   case "upgrade":
     tool := tools["pacman"]
-    tool.upgrade()
+    tool.Upgrade()
   default:
     fmt.Println("Not founded!")
   }
