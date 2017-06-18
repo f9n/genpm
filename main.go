@@ -67,66 +67,6 @@ func checkTool(tool string) bool {
 	}
 }
 
-// Searching string with tool
-func search(searchstring string)  {
-  fmt.Println(searchstring)
-  commands := []string{
-    "sudo",
-    "pacman",
-    "-Ss",
-    searchstring,
-  }
-  script := strings.Join(commands, " ")
-  fmt.Println(script)
-  if checkTool("pacman") {
-    cmd := exec.Command("/bin/bash", "-c", script)
-    cmd.Stdout = os.Stdout
-    cmd.Stdin = os.Stdin
-		cmd.Stderr = os.Stderr
-		_ = cmd.Run()
-  }
-}
-
-// Removing package with tool
-func remove(packagename string)  {
-  fmt.Println(packagename)
-  commands := []string{
-    "sudo",
-    "pacman",
-    "-R",
-    packagename,
-  }
-  script := strings.Join(commands, " ")
-  fmt.Println(script)
-  if checkTool("pacman") {
-    cmd := exec.Command("/bin/bash", "-c", script)
-    cmd.Stdout = os.Stdout
-    cmd.Stdin = os.Stdin
-		cmd.Stderr = os.Stderr
-		_ = cmd.Run()
-  }
-}
-
-// Installing package with tool
-func install(packagename string)  {
-  fmt.Println(packagename)
-  commands := []string{
-    "sudo",
-    "pacman",
-    "-S",
-    packagename,
-  }
-  script := strings.Join(commands, " ")
-  fmt.Println(script)
-  if checkTool("pacman") {
-    cmd := exec.Command("/bin/bash", "-c", script)
-    cmd.Stdout = os.Stdout
-    cmd.Stdin = os.Stdin
-		cmd.Stderr = os.Stderr
-		_ = cmd.Run()
-  }
-}
-
 func main()  {
   fmt.Println(tools)
   fmt.Println(tools["pacman"])
