@@ -13,16 +13,28 @@ type Tool struct {
   search  string
 }
 
+func (this *Tool) installer(packagename string) {
+  fmt.Println("[+] Runned Tool install method")
+  fmt.Println(packagename)
+  script := this.install + " " + packagename
+  fmt.Println(script)
+  cmd := exec.Command("/bin/bash", "-c", script)
+  cmd.Stdout = os.Stdout
+  cmd.Stdin = os.Stdin
+  cmd.Stderr = os.Stderr
+  _ = cmd.Run()
+}
+
 var tools = map[string]Tool{
   "pacman": {
-    "pacman -S",        // install
-    "pacman -R",        // remove
-    "pacman -Ss",       // search
+    "sudo pacman -S",        // install
+    "sudo pacman -R",        // remove
+    "sudo pacman -Ss",       // search
   },
   "apt-get": {
-    "apt-get install",  // install
-    "apt-get remove",   // remove
-    "apt-cache search", // search
+    "sudo apt-get install",  // install
+    "sudo apt-get remove",   // remove
+    "sudo apt-cache search", // search
   },
 }
 
@@ -106,7 +118,9 @@ func main()  {
 
   switch args[0] {
   case "install":
-    install(args[1])
+    tool := tools["pacman"]
+    tool.installer(args[1])
+    // install(args[1])
   case "remove":
     remove(args[1])
   case "search":
