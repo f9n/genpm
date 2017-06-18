@@ -7,11 +7,23 @@ import (
   "strings"
 )
 
-const tools = []string{
-  "pacman",   // Arch Based
-  "apt-get",  // Debian Based
-  "dnf",      // Fedora Based
-  "yum",      // Rpm Based
+type Tool struct {
+  install string
+  remove  string
+  search  string
+}
+
+var tools = map[string]Tool{
+  "pacman": {
+    "pacman -S",        // install
+    "pacman -R",        // remove
+    "pacman -Ss"        // search
+  },
+  "apt-get": {
+    "apt-get install",  // install
+    "apt-get remove",   // remove
+    "apt-cache search"  // search
+  },
 }
 
 // Checking tool with which command
@@ -87,6 +99,9 @@ func install(packagename string)  {
 }
 
 func main()  {
+  fmt.Println(tools)
+  fmt.Println(tools["pacman"])
+  fmt.Println(tools["pacman"].install)
   args := os.Args[1:]
 
   switch args[0] {
