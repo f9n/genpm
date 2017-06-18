@@ -3,6 +3,8 @@ package genpm
 import (
   "fmt"
   "os"
+  "os/exec"
+  "io/ioutil"
 )
 
 var toolsList = []string{
@@ -15,15 +17,15 @@ var toolsList = []string{
 
 // Creating .genpmrc file with Genpm struct
 type Genpm struct {
-  path string
-  tool string
+  Path string
+  Tool string
 }
 
 // reload .genpmrc file
 func (this *Genpm) reload() {
-  file, err := os.Create(this.path)
+  file, err := os.Create(this.Path)
   if err != nil {
-    // handle the error here
+    fmt.Println("The file doesn't created, ", err)
     return
   }
   defer file.Close()
@@ -31,15 +33,16 @@ func (this *Genpm) reload() {
   available := checkAvailableTools()
   fmt.Println(available)
   file.WriteString(available[0])
+  this.Tool = available[0]
 }
 
 // checking .genpmrc file
 func (this *Genpm) Check() {
   // read the whole file at once
-  b, err := ioutil.ReadFile(this.path)
-  this.tool = string(b)
+  b, err := ioutil.ReadFile(this.Path)
+  this.Tool = string(b)
   if err != nil {
-    fmt.Println("The File is not exists!")
+    fmt.Println("The File is not exists!", err)
     this.reload()
   }
 }
