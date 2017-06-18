@@ -19,6 +19,25 @@ func checkTool(tool string) bool {
 	}
 }
 
+func search(searchstring string)  {
+  fmt.Println(searchstring)
+  commands := []string{
+    "sudo",
+    "pacman",
+    "-Ss",
+    searchstring,
+  }
+  script := strings.Join(commands, " ")
+  fmt.Println(script)
+  if checkTool("pacman") {
+    cmd := exec.Command("/bin/bash", "-c", script)
+    cmd.Stdout = os.Stdout
+    cmd.Stdin = os.Stdin
+		cmd.Stderr = os.Stderr
+		_ = cmd.Run()
+  }
+}
+
 func remove(packagename string)  {
   fmt.Println(packagename)
   commands := []string{
@@ -65,6 +84,8 @@ func main()  {
     install(args[1])
   case "remove":
     remove(args[1])
+  case "search":
+    search(args[1])
   default:
     fmt.Println("Not founded!")
   }
