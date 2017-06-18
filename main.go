@@ -2,18 +2,10 @@ package main
 
 import (
   "fmt"
-  // "os"
-  "os/exec"
+  "os"
   "github.com/pleycpl/genpm/tool"
+  "github.com/pleycpl/genpm/genpm"
 )
-
-var toolsList = []string{
-  "pacman",
-  "apt",
-  "dnf",
-  "zypper",
-  "emerge",
-}
 
 // https://stackoverflow.com/questions/35343707/linux-apt-get-command-not-found-how-to-install-a-package-in-arch-linux , Thnaks for https://stackoverflow.com/users/523100/czechnology
 var tools = map[string]tool.Tool{
@@ -49,55 +41,35 @@ var tools = map[string]tool.Tool{
   },
 }
 
-func checkAvailableTools() []string {
-  var availableTools []string
-  for _, tool := range toolsList {
-    if checkTool(tool) {
-      availableTools = append(availableTools, tool)
-    }
-  }
-  return availableTools
-}
-
-// Checking tool with which command
-func checkTool(tool string) bool {
-  cmdOut, err := exec.Command("which", tool).Output()
-	if err != nil {
-		// fmt.Fprintln(os.Stderr, err)
-		return false
-	} else {
-		fmt.Println(string(cmdOut))
-		return true
-	}
-}
-
 func main()  {
+  MyTool := genpm.Genpm{"/home/chuck/.genpmrc", ""}
+  fmt.Println(MyTool.Path)
+  MyTool.Check()
+  fmt.Println(MyTool.Tool)
+  fmt.Println(tools[MyTool.Tool])
   fmt.Println(tools["pacman"])
   fmt.Println(tools["pacman"].InstallCommand)
   fmt.Println(tools["pacman"].RemoveCommand)
   fmt.Println(tools["pacman"].SearchCommand)
   fmt.Println(tools["pacman"].UpgradeCommand)
 
-  available := checkAvailableTools()
-  fmt.Println(available)
-  /*
   args := os.Args[1:]
-
-  switch args[0] {
-  case "install":
-    tool := tools["pacman"]
-    tool.Install(args[1])
-  case "remove":
-    tool := tools["pacman"]
-    tool.Remove(args[1])
-  case "search":
-    tool := tools["pacman"]
-    tool.Search(args[1])
-  case "upgrade":
-    tool := tools["pacman"]
-    tool.Upgrade()
-  default:
-    fmt.Println("Not founded!")
+  if len(args) > 0 {
+    switch args[0] {
+    case "install":
+      tool := tools["pacman"]
+      tool.Install(args[1])
+    case "remove":
+      tool := tools["pacman"]
+      tool.Remove(args[1])
+    case "search":
+      tool := tools["pacman"]
+      tool.Search(args[1])
+    case "upgrade":
+      tool := tools["pacman"]
+      tool.Upgrade()
+    default:
+      fmt.Println("Not founded!")
+    }
   }
-  */
 }
