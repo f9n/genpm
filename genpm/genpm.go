@@ -2,9 +2,11 @@ package genpm
 
 import (
   "fmt"
+  "strings"
   "os"
   "os/exec"
   "io/ioutil"
+  "encoding/json"
   "github.com/pleycpl/genpm/tool"
 )
 
@@ -47,13 +49,7 @@ func (this *Genpm) Check() {
     fmt.Println("The File is not exists!", err)
     toolname = this.reload()
   }
-  this.Tool = tool.Tool{
-    ToolName: toolname,
-    InstallCommand: "echo installcommand",
-    RemoveCommand: "echo RemoveCommand",
-    SearchCommand: "echo stringcommand",
-    UpgradeCommand: "echo UpgradeCommand",
-  }
+  this.Tool = readJsonFile(toolname)
 }
 
 func NewGenpm(path string) Genpm {
@@ -90,4 +86,19 @@ func isExistsPm(tool string) bool {
 	} else {
 		return true
 	}
+}
+
+func readJsonFile(filename string) tool.Tool {
+  fmt.Println("[+] Runned readJsonFile function")
+  jsonFile, err := os.Open(strings.Join([]string{"static/", filename, ".json"}, ""))
+  if err != nil {
+	   fmt.Println(err)
+  }
+  defer jsonFile.Close()
+  fmt.Println("Successfully Opened xxxx.json: ", filename)
+
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+	var toolA tool.Tool
+	json.Unmarshal(byteValue, &toolA)
+  return toolA
 }
