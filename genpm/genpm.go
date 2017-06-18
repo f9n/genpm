@@ -7,7 +7,7 @@ import (
   "io/ioutil"
 )
 
-var toolsList = []string{
+var allpackagemanagers = []string{
   "pacman",
   "apt",
   "dnf",
@@ -23,6 +23,7 @@ type Genpm struct {
 
 // reload .genpmrc file
 func (this *Genpm) reload() {
+  fmt.Println("[+] Runned reload method in Genpm Struct")
   file, err := os.Create(this.Path)
   if err != nil {
     fmt.Println("The file doesn't created, ", err)
@@ -30,15 +31,14 @@ func (this *Genpm) reload() {
   }
   defer file.Close()
 
-  available := checkAvailableTools()
-  fmt.Println(available)
-  file.WriteString(available[0])
-  this.Tool = available[0]
+  availables := getExistsPmTools()
+  file.WriteString(availables[0])
+  this.Tool = availables[0]
 }
 
 // checking .genpmrc file
 func (this *Genpm) Check() {
-  // read the whole file at once
+  fmt.Println("[+] Runned Check method in Genpm Struct")
   b, err := ioutil.ReadFile(this.Path)
   this.Tool = string(b)
   if err != nil {
@@ -48,24 +48,24 @@ func (this *Genpm) Check() {
 }
 
 // checking available tools
-func checkAvailableTools() []string {
-  var availableTools []string
-  for _, tool := range toolsList {
-    if checkTool(tool) {
-      availableTools = append(availableTools, tool)
+func getExistsPmTools() []string {
+  fmt.Println("[+] Runned getExistsPmTools function")
+  var tools []string
+  for _, packagemanager := range allpackagemanagers {
+    if isExistsPm(packagemanager) {
+      tools = append(tools, packagemanager)
     }
   }
-  return availableTools
+  return tools
 }
 
-// Checking tool with which command
-func checkTool(tool string) bool {
-  cmdOut, err := exec.Command("which", tool).Output()
+// Checking package manager with which command
+func isExistsPm(tool string) bool {
+  fmt.Println("[+] Runned isExistsPm function")
+  _, err := exec.Command("which", tool).Output()
 	if err != nil {
-		// fmt.Fprintln(os.Stderr, err)
 		return false
 	} else {
-		fmt.Println(string(cmdOut))
 		return true
 	}
 }
