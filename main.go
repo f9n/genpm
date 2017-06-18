@@ -4,7 +4,6 @@ import (
   "fmt"
   "os"
   "os/exec"
-  "strings"
 )
 
 // contain tool's install, remove, search commands
@@ -38,6 +37,14 @@ func (this *Tool) remove(packagename string) {
   fmt.Println("[+] Runned Tool remove method")
   fmt.Println(packagename)
   script := this.removeCommand + " " + packagename
+  fmt.Println(script)
+  this.runScript(script)
+}
+
+func (this *Tool) search(searchstring string) {
+  fmt.Println("[+] Runned Tool search method")
+  fmt.Println(searchstring)
+  script := this.searchCommand + " " + searchstring
   fmt.Println(script)
   this.runScript(script)
 }
@@ -83,7 +90,9 @@ func main()  {
     tool.remove(args[1])
     // remove(args[1])
   case "search":
-    search(args[1])
+    tool := tools["pacman"]
+    tool.search(args[1])
+    //search(args[1])
   default:
     fmt.Println("Not founded!")
   }
