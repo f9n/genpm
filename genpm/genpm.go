@@ -19,11 +19,11 @@ func (this *Genpm) reload() string {
   fmt.Println("[+] Runned reload method in Genpm Struct")
   file, err := os.Create(this.Path)
   if err != nil {
-    fmt.Println("The file doesn't created, ", err)
+    fmt.Println("The File doesn't created, ", err)
     return ""
   }
   defer file.Close()
-
+  fmt.Println("The File created")
   availables := util.GetExistsPmTools()
   file.WriteString(availables[0])
   toolname := availables[0]
@@ -43,6 +43,7 @@ func (this *Genpm) Check() {
 }
 
 func NewGenpm(path string) Genpm {
+  fmt.Println("[+] Runned NewGenpm function")
   GenpmInstance := Genpm{
     Path: path,
     Tool: tool.Tool{
