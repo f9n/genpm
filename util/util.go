@@ -10,7 +10,29 @@ import (
   "github.com/pleycpl/genpm/tool"
 )
 
+var allpackagemanagers = func () []string {
+  fmt.Println("[+] Runned anonymus function")
+  dir, err := os.Open("/home/chuck/go/src/github.com/pleycpl/genpm/static")
+  if err != nil {
+    fmt.Println("The file doesn't exists, ", err)
+    return []string{}
+  }
+  defer dir.Close()
 
+  filenames := []string{}
+  fileInfos, err := dir.Readdir(-1)
+  if err != nil {
+    fmt.Println(err)
+    return []string{}
+  }
+  for _, fi := range fileInfos {
+    name := strings.Replace(fi.Name(), ".json", "", -1)
+    filenames = append(filenames, name)
+  }
+  fmt.Println(filenames)
+  return filenames
+}()
+/*
 var allpackagemanagers = []string{
   "pacman",
   "apt",
@@ -18,7 +40,7 @@ var allpackagemanagers = []string{
   "zypper",
   "emerge",
 }
-
+*/
 // checking available tools
 func GetExistsPmTools() []string {
   fmt.Println("[+] Runned getExistsPmTools function")
@@ -49,7 +71,7 @@ func ReadJsonFile(filename string) tool.Tool {
 	   fmt.Println(err)
   }
   defer jsonFile.Close()
-  fmt.Println("Successfully Opened xxxx.json: ", filename)
+  fmt.Printf("Successfully Opened static/%s.json\n", filename)
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 	var toolA tool.Tool
