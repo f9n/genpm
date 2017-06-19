@@ -14,6 +14,7 @@ type Tool struct {
   SearchCommand  string `json:"search"`
   UpgradeCommand string `json:"upgrade"`
   InfoCommand    string `json:"info"`
+  SetupCommand   string `json:"setup"`
 }
 
 // run script in bash
@@ -57,5 +58,11 @@ func (this *Tool) Upgrade() {
 func (this *Tool) Info(packagename string) {
   fmt.Println("[+] Runned Info method in Tool Struct")
   script := this.InfoCommand + " " + packagename
+  this.runScript(script)
+}
+
+func (this *Tool) Setup(path string) {
+  fmt.Println("[+] Runned Setup method in Tool Struct")
+  script  := this.SetupCommand + " " + path
   this.runScript(script)
 }
