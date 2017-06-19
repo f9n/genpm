@@ -3,5 +3,6 @@
   "install": "sudo apt-get install",
   "remove": "sudo apt-get remove",
   "search": "sudo apt-cache search",
-  "upgrade": "sudo apt-get update; sudo apt-get upgrade"
+  "upgrade": "sudo apt-get update; sudo apt-get upgrade",
+  "info": "sudo apt-cache show"
 }
