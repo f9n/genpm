@@ -23,6 +23,10 @@ func main()  {
       tool.Search(args[1])
     case "upgrade":
       tool.Upgrade()
+    case "info":
+      tool.Info(args[1])
+    case "setup":
+      tool.Setup(args[1])
     default:
       fmt.Println("Not founded!")
     }
