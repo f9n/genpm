@@ -13,6 +13,7 @@ type Tool struct {
   RemoveCommand  string `json:"remove"`
   SearchCommand  string `json:"search"`
   UpgradeCommand string `json:"upgrade"`
+  InfoCommand    string `json:"info"`
 }
 
 // run script in bash
@@ -48,6 +49,13 @@ func (this *Tool) Search(searchstring string) {
 
 // upgrade packages with Tool
 func (this *Tool) Upgrade() {
-  fmt.Println("[+] Runned Tool upgrade method")
+  fmt.Println("[+] Runned Upgrade method in Tool Struct")
   this.runScript(this.UpgradeCommand)
+}
+
+// info package with Tool
+func (this *Tool) Info(packagename string) {
+  fmt.Println("[+] Runned Info method in Tool Struct")
+  script := this.InfoCommand + " " + packagename
+  this.runScript(script)
 }
