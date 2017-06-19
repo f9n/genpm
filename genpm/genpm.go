@@ -2,21 +2,11 @@ package genpm
 
 import (
   "fmt"
-  "strings"
   "os"
-  "os/exec"
   "io/ioutil"
-  "encoding/json"
   "github.com/pleycpl/genpm/tool"
+  "github.com/pleycpl/genpm/util"
 )
-
-var allpackagemanagers = []string{
-  "pacman",
-  "apt",
-  "dnf",
-  "zypper",
-  "emerge",
-}
 
 // Creating .genpmrc file with Genpm struct
 type Genpm struct {
@@ -34,7 +24,7 @@ func (this *Genpm) reload() string {
   }
   defer file.Close()
 
-  availables := getExistsPmTools()
+  availables := util.GetExistsPmTools()
   file.WriteString(availables[0])
   toolname := availables[0]
   return toolname
@@ -49,7 +39,7 @@ func (this *Genpm) Check() {
     fmt.Println("The File is not exists!", err)
     toolname = this.reload()
   }
-  this.Tool = readJsonFile(toolname)
+  this.Tool = util.ReadJsonFile(toolname)
 }
 
 func NewGenpm(path string) Genpm {
@@ -65,42 +55,4 @@ func NewGenpm(path string) Genpm {
   }
   GenpmInstance.Check()
   return GenpmInstance
-}
-
-// checking available tools
-func getExistsPmTools() []string {
-  fmt.Println("[+] Runned getExistsPmTools function")
-  var tools []string
-  for _, packagemanager := range allpackagemanagers {
-    if isExistsPm(packagemanager) {
-      tools = append(tools, packagemanager)
-    }
-  }
-  return tools
-}
-
-// Checking package manager with which command
-func isExistsPm(tool string) bool {
-  fmt.Println("[+] Runned isExistsPm function")
-  _, err := exec.Command("which", tool).Output()
-	if err != nil {
-		return false
-	} else {
-		return true
-	}
-}
-
-func readJsonFile(filename string) tool.Tool {
-  fmt.Println("[+] Runned readJsonFile function")
-  jsonFile, err := os.Open(strings.Join([]string{"static/", filename, ".json"}, ""))
-  if err != nil {
-	   fmt.Println(err)
-  }
-  defer jsonFile.Close()
-  fmt.Println("Successfully Opened xxxx.json: ", filename)
-
-	byteValue, _ := ioutil.ReadAll(jsonFile)
-	var toolA tool.Tool
-	json.Unmarshal(byteValue, &toolA)
-  return toolA
 }
