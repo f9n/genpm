@@ -13,7 +13,9 @@ import (
 
 var allpackagemanagers = func() []string {
 	fmt.Println("[+] Runned anonymus function")
-	dir, err := os.Open("/home/chuck/go/src/github.com/pleycpl/genpm/static")
+	home := os.Getenv("HOME")
+	file := home + "/go/src/github.com/pleycpl/genpm/static"
+	dir, err := os.Open(file)
 	if err != nil {
 		fmt.Println("The file doesn't exists, ", err)
 		return []string{}
