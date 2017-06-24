@@ -10,7 +10,9 @@ import (
 // https://stackoverflow.com/questions/35343707/linux-apt-get-command-not-found-how-to-install-a-package-in-arch-linux , Thnaks for https://stackoverflow.com/users/523100/czechnology
 func main() {
 	fmt.Println("[+] Runned Main function")
-	GenpmInstance := genpm.NewGenpm("/home/chuck/.genpmrc")
+	home := os.Getenv("HOME")
+	path := home + "/.genpmrc"
+	GenpmInstance := genpm.NewGenpm(path)
 
 	args := os.Args[1:]
 	if len(args) > 0 {
