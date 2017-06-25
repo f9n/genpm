@@ -30,6 +30,8 @@ func main() {
 			tool.Info(args[1])
 		case "setup":
 			tool.Setup(args[1])
+		case "version", "--version":
+			fmt.Println("Genpm Version 1.0.0")
 		default:
 			fmt.Println("Not founded!")
 		}
