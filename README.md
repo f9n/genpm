@@ -4,12 +4,8 @@ Golang version must be over 1.8
 
 # Installation
 
-```sh
-  $ go get github.com/pleycpl/genpm
-  $ cd ~/go/src/github.com/pleycpl/genpm
-  $ go install
-  $ export PATH=$PATH:~/go/bin
-  $ genpm version
+```bash
+  $ bash -c "$(curl -fsSL https://raw.githubusercontent.com/pleycpl/gotoolsetup/master/init.sh) github.com/pleycpl/genpm"
 ```
 
 # Usage
